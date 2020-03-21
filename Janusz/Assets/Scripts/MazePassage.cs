@@ -2,4 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MazePassage : MazeCellEdge {}
+public class MazePassage : MazeCellEdge {
+	
+}

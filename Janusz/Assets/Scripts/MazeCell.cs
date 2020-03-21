@@ -5,11 +5,17 @@ using UnityEngine;
 public class MazeCell : MonoBehaviour
 {
     public IntVector2 coordinates;
-
-    private MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
+	public MazeRoom room;
+	private MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
 
 	private int initializedEdgeCount;
 
+
+	public void Initialize(MazeRoom room)
+	{
+		room.Add(this);
+		transform.GetChild(0).GetComponent<Renderer>().material = room.settings.floorMaterial;
+	}
 	public bool IsFullyInitialized {
 		get {
 			return initializedEdgeCount == MazeDirections.Count;

@@ -11,43 +11,68 @@ public class Maze : MonoBehaviour {
 	
 	public MazePassage passagePrefab;
 	public MazeWall wallPrefab;
+	public MazeRoomSettings[] roomSettings;
 
 	public float generationStepDelay;
 
 
 
 	private MazeCell[,] cells;
+	public MazeDoor doorPrefab;
 
+	[Range(0f, 1f)]
+	public float doorProbability;
 
 
 
 	public IntVector2 RandomCoordinates {
 		get {
-			return new IntVector2(Random.Range(0, size.x), Random.Range(0, size.z));
+			Debug.Log(Random.Range(0, size.x));
+			Debug.Log(Random.Range(0, size.z));
+
+			return new IntVector2(0,0);
+			//return new IntVector2(Random.Range(0, size.x), Random.Range(0, size.z));
+
 		}
 	}
 
 	public bool ContainsCoordinates (IntVector2 coordinate) {
-		return coordinate.x >= 0 && coordinate.x < size.x && coordinate.z >= 0 && coordinate.z < size.z;
+		return coordinate.x >= 0  && coordinate.x < size.x  && coordinate.z >= 0 && coordinate.z < size.z;
 	}
 	
 	public MazeCell GetCell (IntVector2 coordinates) {
 		return cells[coordinates.x, coordinates.z];
 	}
 	
-	public IEnumerator Generate () {
+	public void Generate () {
 		WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
 		cells = new MazeCell[size.x, size.z];
 		List<MazeCell> activeCells = new List<MazeCell>();
 		DoFirstGenerationStep(activeCells);
-		while (activeCells.Count > 0) {
-			yield return delay;
+		while (activeCells.Count > 0)
+		{
+			//yield return delay;
 			DoNextGenerationStep(activeCells);
 		}
 	}
-
+	private void CreatePassageInSameRoom(MazeCell cell, MazeCell otherCell, MazeDirection direction)
+	{
+		MazePassage passage = Instantiate(passagePrefab) as MazePassage;
+		passage.Initialize(cell, otherCell, direction);
+		passage = Instantiate(passagePrefab) as MazePassage;
+		passage.Initialize(otherCell, cell, direction.GetOpposite());
+		if (cell.room != otherCell.room)
+		{
+			MazeRoom roomToAssimilate = otherCell.room;
+			cell.room.Assimilate(roomToAssimilate);
+			rooms.Remove(roomToAssimilate);
+			Destroy(roomToAssimilate);
+		}
+	}
 	private void DoFirstGenerationStep (List<MazeCell> activeCells) {
-		activeCells.Add(CreateCell(RandomCoordinates));
+		MazeCell newCell = CreateCell(RandomCoordinates);
+		newCell.Initialize(CreateRoom(-1));
+		activeCells.Add(newCell);
 	}
 
 	private void DoNextGenerationStep (List<MazeCell> activeCells) {
@@ -65,6 +90,10 @@ public class Maze : MonoBehaviour {
 				neighbor = CreateCell(coordinates);
 				CreatePassage(currentCell, neighbor, direction);
 				activeCells.Add(neighbor);
+			}
+			else if (currentCell.room.settingsIndex == neighbor.room.settingsIndex)
+			{
+				CreatePassageInSameRoom(currentCell, neighbor, direction);
 			}
 			else {
 				CreateWall(currentCell, neighbor, direction);
@@ -89,9 +118,18 @@ public class Maze : MonoBehaviour {
 
 
 	private void CreatePassage (MazeCell cell, MazeCell otherCell, MazeDirection direction) {
-		MazePassage passage = Instantiate(passagePrefab) as MazePassage;
+		MazePassage prefab = Random.value < doorProbability ? doorPrefab : passagePrefab;
+		MazePassage passage = Instantiate(prefab) as MazePassage;
 		passage.Initialize(cell, otherCell, direction);
-		passage = Instantiate(passagePrefab) as MazePassage;
+		passage = Instantiate(prefab) as MazePassage;
+		if (passage is MazeDoor)
+		{
+			otherCell.Initialize(CreateRoom(cell.room.settingsIndex));
+		}
+		else
+		{
+			otherCell.Initialize(cell.room);
+		}
 		passage.Initialize(otherCell, cell, direction.GetOpposite());
 	}
 
@@ -102,5 +140,20 @@ public class Maze : MonoBehaviour {
 			wall = Instantiate(wallPrefab) as MazeWall;
 			wall.Initialize(otherCell, cell, direction.GetOpposite());
 		}
+	}
+
+	private List<MazeRoom> rooms = new List<MazeRoom>();
+
+	private MazeRoom CreateRoom(int indexToExclude)
+	{
+		MazeRoom newRoom = ScriptableObject.CreateInstance<MazeRoom>();
+		newRoom.settingsIndex = Random.Range(0, roomSettings.Length);
+		if (newRoom.settingsIndex == indexToExclude)
+		{
+			newRoom.settingsIndex = (newRoom.settingsIndex + 1) % roomSettings.Length;
+		}
+		newRoom.settings = roomSettings[newRoom.settingsIndex];
+		rooms.Add(newRoom);
+		return newRoom;
 	}
 }

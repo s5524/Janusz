@@ -7,9 +7,9 @@ public class GameManager : MonoBehaviour {
 
 	private Maze mazeInstance;
 
-	public Player playerPrefab;
+	public PlayerMovement playerPrefab;
 
-	private Player playerInstance;
+	private PlayerMovement playerInstance;
 
 	
 	private void Update () {
@@ -19,13 +19,13 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void Start () {
-		StartCoroutine(BeginGame());
+		BeginGame();
 	}
 	
-	private IEnumerator BeginGame () {
+	private void BeginGame () {
 		mazeInstance = Instantiate(mazePrefab) as Maze;
-		yield return StartCoroutine(mazeInstance.Generate());
-		playerInstance = Instantiate(playerPrefab) as Player;
+		mazeInstance.Generate();
+		playerInstance = Instantiate(playerPrefab) as PlayerMovement;
 		playerInstance.SetLocation(mazeInstance.GetCell(mazeInstance.RandomCoordinates));
 	}
 
@@ -35,6 +35,6 @@ public class GameManager : MonoBehaviour {
 		if (playerInstance != null) {
 			Destroy(playerInstance.gameObject);
 		}
-		StartCoroutine(BeginGame());
+		BeginGame();
 	}
 }

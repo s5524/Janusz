@@ -27,9 +27,7 @@ public class Maze : MonoBehaviour {
 
 	public IntVector2 RandomCoordinates {
 		get {
-			Debug.Log(Random.Range(0, size.x));
-			Debug.Log(Random.Range(0, size.z));
-
+			
 			return new IntVector2(0,0);
 			//return new IntVector2(Random.Range(0, size.x), Random.Range(0, size.z));
 

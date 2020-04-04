@@ -37,7 +37,8 @@ public class MazeDoor : MazePassage {
 
 	public override void OnPlayerEntered()
 	{
-		OtherSideOfDoor.hinge.localRotation = hinge.localRotation = Quaternion.Euler(0f, -90f, 0f);
+		OtherSideOfDoor.hinge.localRotation = hinge.localRotation =
+			isMirrored ? mirroredRotation : normalRotation;
 	}
 
 	public override void OnPlayerExited()

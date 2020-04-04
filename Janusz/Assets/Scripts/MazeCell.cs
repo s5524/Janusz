@@ -11,6 +11,8 @@ public class MazeCell : MonoBehaviour
 	private int initializedEdgeCount;
 
 
+
+	
 	public void Initialize(MazeRoom room)
 	{
 		room.Add(this);
@@ -45,5 +47,21 @@ public class MazeCell : MonoBehaviour
 	public void SetEdge (MazeDirection direction, MazeCellEdge edge) {
 		edges[(int)direction] = edge;
 		initializedEdgeCount += 1;
+	}
+
+	public void OnPlayerEntered()
+	{
+		for (int i = 0; i < edges.Length; i++)
+		{
+			edges[i].OnPlayerEntered();
+		}
+	}
+
+	public void OnPlayerExited()
+	{
+		for (int i = 0; i < edges.Length; i++)
+		{
+			edges[i].OnPlayerExited();
+		}
 	}
 }

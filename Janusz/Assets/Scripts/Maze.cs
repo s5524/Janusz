@@ -33,7 +33,10 @@ public class Maze : MonoBehaviour {
 
 		}
 	}
-
+	public MazeCell GetCell(int x,int y)
+	{
+		return cells[x, y];
+	}
 	public bool ContainsCoordinates (IntVector2 coordinate) {
 		return coordinate.x >= 0  && coordinate.x < size.x  && coordinate.z >= 0 && coordinate.z < size.z;
 	}
@@ -110,7 +113,7 @@ public class Maze : MonoBehaviour {
 		newCell.name = "Maze Cell " + coordinates.x + ", " + coordinates.z;
 		newCell.transform.parent = transform;
 		newCell.transform.localPosition =
-			new Vector3(coordinates.x - size.x * 0.5f + 0.5f, 0f, coordinates.z - size.z * 0.5f + 0.5f);
+			new Vector3(coordinates.x - size.x * 11.5f + 11.5f, 0f, coordinates.z - size.z * 11.5f + 11.5f);
 		return newCell;
 	}
 

@@ -23,9 +23,9 @@ public class GameTimer : MonoBehaviour
 
             timerStart -= Time.deltaTime;
             textBox.text = Math.Round(timerStart, 2).ToString();
-            if (timerStart < 0)
+            if (timerStart < 0.00f)
             {
-                timerStart = 0;
+                timerStart = 0.00f;
             }
         }
         else

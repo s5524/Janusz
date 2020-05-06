@@ -13,9 +13,10 @@ public interface IInventoryItems
 }
 public class InventoryEventArgs : EventArgs
 {
-    public IInventoryItems Item;
     public InventoryEventArgs(IInventoryItems item)
     {
         Item = item;
     }
+    public IInventoryItems Item;
+
 }

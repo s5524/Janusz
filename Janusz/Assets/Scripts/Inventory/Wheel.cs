@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wheel : MonoBehaviour ,IInventoryItems
-{
-    public string Name => "Wheel";
+public class Wheel : Item 
+{ 
+
+    public override string Name => "Wheel";
 
     public Sprite _imaget;
-    public Sprite Image => _imaget;
+    public override Sprite Image => _imaget;
 
-    public void OnPickup()
+    public override void OnPickup()
     {
         gameObject.SetActive(false);
     }

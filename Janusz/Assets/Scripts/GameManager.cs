@@ -40,6 +40,46 @@ public class GameManager : MonoBehaviour
 
 	private GameObject starterPointInstance;
 
+
+	public Inventory inventoryPrefab;
+
+	private Inventory inventoryInstance;
+
+	public HUD HUDPrefab;
+	private HUD HUDInstance;
+
+	public Item[] itemsPrefab;
+	private Item[] itemsInstances;
+
+	public GameObject completeLevelUi;
+	public GameObject gameOverUi;
+
+	private int size = 50;
+	private int time = 20;
+	public void CompleteLevel()
+	{
+		completeLevelUi.SetActive(true);
+
+	}
+
+	public void GameOver()
+	{
+		size = 20;
+		time = 30;
+
+		gameOverUi.SetActive(true);
+
+
+	}
+	public void GoNext()
+	{
+		size += 5;
+		time += 20;
+		RestartGame();
+		completeLevelUi.SetActive(false);
+
+	}
+
 	//private bool playerLost = false;
 
 	private void Update()
@@ -50,13 +90,15 @@ public class GameManager : MonoBehaviour
 		}
 		if (enemyInstance.EnemyCaught)
 		{
-			RestartGame();
+			GameOver();
 		}
-
 		enemyPioterInstance.SetTravelLocation(mazeInstance.GetCell(mazeInstance.RandomCoordinates1));
 		enemySzwagierInstance.SetTravelLocation(mazeInstance.GetCell(mazeInstance.RandomCoordinates1));
 
-
+		if (inventoryInstance.itemsColected() == 3)
+		{
+			CompleteLevel();
+		}
 
 		//if(timerInstance.timerStart < 1)
 		//{
@@ -66,12 +108,14 @@ public class GameManager : MonoBehaviour
 
 	private void Start()
 	{
-		BeginGame();
+		RestartGame();
+		Debug.Log("begin");
 	}
 
 	private void BeginGame()
 	{
 		mazeInstance = Instantiate(mazePrefab) as Maze;
+		mazeInstance.size = new IntVector2(size, size);
 		mazeInstance.Generate();
 
 
@@ -81,14 +125,25 @@ public class GameManager : MonoBehaviour
 		var entrancePosition = mazeInstance.GetCell(new IntVector2(0, 0)).transform.position;
 
 
+		inventoryInstance = Instantiate(inventoryPrefab) as Inventory;
+		HUDInstance = Instantiate(HUDPrefab) as HUD;
+
+		HUDInstance.Inventory = inventoryInstance;
+
+
 		playerInstance = Instantiate(playerPrefab) as PlayerMovement;
 		//playerInstance.SetLocation(mazeInstance.GetCell(new IntVector2(0, 0)));
 		entrancePosition.z = entrancePosition.z - 4;
+		entrancePosition.z = entrancePosition.z + 1;
 		playerInstance.transform.position = entrancePosition;
+		playerInstance.inventory = inventoryInstance;
 		playerInstance.SetCells(mazeInstance);
 
 		timerInstance = Instantiate(timerPrefab) as GameTimer;
+		timerInstance.timerStart = time;
 		timerInstance.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
+		HUDInstance.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
+		entrancePosition.z = entrancePosition.z - 1;
 
 		entrancePosition.z = entrancePosition.z - 2;
 		//entrancePosition.y = entrancePosition.y + 1;
@@ -101,11 +156,11 @@ public class GameManager : MonoBehaviour
 
 		enemyPioterInstance = Instantiate(enemyPioterPrefab) as EnemyPioter;
 		enemyPioterInstance.SetPlayer(playerInstance);
-		enemyPioterInstance.SetLocation(mazeInstance.GetCell(new IntVector2(UnityEngine.Random.Range(1, mazeInstance.size.z/2), UnityEngine.Random.Range(mazeInstance.size.x / 2, mazeInstance.size.z))));
+		enemyPioterInstance.SetLocation(mazeInstance.GetCell(new IntVector2(UnityEngine.Random.Range(1, mazeInstance.size.x/2), UnityEngine.Random.Range(mazeInstance.size.z / 2, mazeInstance.size.z))));
 
 		enemySzwagierInstance = Instantiate(enemySzwagierPrefab) as EnemySzwagier;
 		enemySzwagierInstance.SetPlayer(playerInstance);
-		enemySzwagierInstance.SetLocation(mazeInstance.GetCell(new IntVector2(UnityEngine.Random.Range(mazeInstance.size.x/2,mazeInstance.size.z), UnityEngine.Random.Range(mazeInstance.size.x / 2, mazeInstance.size.z))));
+		enemySzwagierInstance.SetLocation(mazeInstance.GetCell(new IntVector2(UnityEngine.Random.Range(mazeInstance.size.x/2,mazeInstance.size.x), UnityEngine.Random.Range(mazeInstance.size.z / 2, mazeInstance.size.z))));
 
 
 		entrancePosition.z = entrancePosition.z + 1;
@@ -118,12 +173,31 @@ public class GameManager : MonoBehaviour
 
 		surfaceInstance.BuildNavMesh();
 
+		itemsInstances = new Item[itemsPrefab.Length]; 
+		for (int i = 0; i < itemsPrefab.Length; i++)
+		{
+			itemsInstances[i] = Instantiate(itemsPrefab[i]) as Item;
+			itemsInstances[i].SetLocation(mazeInstance.GetCell(new IntVector2(UnityEngine.Random.Range(5, mazeInstance.size.x), UnityEngine.Random.Range(5, mazeInstance.size.z))));
+				//SetLocation(mazeInstance.GetCell(new IntVector2(UnityEngine.Random.Range(mazeInstance.size.x / 2, mazeInstance.size.z), UnityEngine.Random.Range(mazeInstance.size.x / 2, mazeInstance.size.z))));
+
+		}
+
+		//foreach (var item in itemsPrefab)
+		//{
+		//	itemI
+		//}
+
+
 	}
 
-	private void RestartGame()
+	public void RestartGame()
 	{
 		StopAllCoroutines();
-		Destroy(mazeInstance.gameObject);
+		if (mazeInstance != null)
+		{
+			Destroy(mazeInstance.gameObject);
+
+		}
 		if (starterPointInstance != null)
 		{
 			Destroy(starterPointInstance.gameObject);
@@ -153,7 +227,21 @@ public class GameManager : MonoBehaviour
 		{
 			Destroy(enemySzwagierInstance.gameObject);
 		}
-
+		if(itemsInstances != null)
+		{
+			foreach (var item in itemsInstances)
+			{
+				Destroy(item.gameObject);
+			}
+		}
+		if (HUDInstance != null)
+		{
+			Destroy(HUDInstance.gameObject);
+		}
+		if(inventoryInstance != null)
+		{
+			Destroy(inventoryInstance.gameObject);
+		}
 		BeginGame();
 	}
 }

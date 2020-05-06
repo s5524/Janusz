@@ -22,23 +22,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
+        IInventoryItems item = other.GetComponent<IInventoryItems>();
+
+        if (item!= null)
+        {
+            Debug.Log(item.Name);
+            item.OnPickup();
+
+        }
+        Debug.Log(other.gameObject.name);
         var firstSpace = other.gameObject.name.ToString().IndexOf(' ');
         var secoundSpace = other.gameObject.name.ToString().IndexOf(' ',firstSpace + 1);
         var comaIndex = other.gameObject.name.ToString().IndexOf(',');
 
         var yIndex = Int32.Parse(other.gameObject.name.ToString().Substring(comaIndex+1));
         var xIndex = Int32.Parse(other.gameObject.name.ToString().Substring(secoundSpace,comaIndex-secoundSpace));
-
         maze.GetCell(xIndex, yIndex).OnPlayerEntered();
-        var cell = maze.GetCell(xIndex, yIndex);
+       // var cell = maze.GetCell(xIndex, yIndex);
 
 
-        Debug.Log(cell.gameObject.name);
-        Debug.Log("="+xIndex+"======"+yIndex+"=");
-        //Debug.Log(Int32.Parse(yIndex.Trim(' ')) + " ====== " + Int32.Parse(xIndex.Trim(' ')));
-
-       // Debug.Log("collide (lenght) : " + other.gameObject.name);
-       // Debug.Log("collide (name) : " + other.gameObject.gameObject);
+     
     }
 
     internal void SetCells(Maze maze)

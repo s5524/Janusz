@@ -17,9 +17,19 @@ public class GameTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timerStart -= Time.deltaTime;
-        textBox.text = Math.Round(timerStart,2).ToString();
+        if (timerStart > 0)
+        {
 
+
+            timerStart -= Time.deltaTime;
+            textBox.text = Math.Round(timerStart, 2).ToString();
+            if (timerStart < 0)
+            {
+                timerStart = 0;
+            }
+        }
+        else
+            timerStart = 0.00f;
         //Debug.Log(transform.parent.name);
     }
 }

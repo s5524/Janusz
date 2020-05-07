@@ -9,10 +9,7 @@ public class GameOver : MonoBehaviour
     public GameManager gm;
     public void LoadGameOver()
     {
-       
-        var async = SceneManager.LoadSceneAsync("Menu");
-        //async.allowSceneActivation = false;
-       // SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         //gm.RestartGame();
     }
 }

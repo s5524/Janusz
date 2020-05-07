@@ -84,7 +84,6 @@ public class GameManager : MonoBehaviour
 
 	private void Update()
 	{
-		Debug.Log("3 " + playerInstance.transform.position);
 
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
@@ -101,7 +100,6 @@ public class GameManager : MonoBehaviour
 		{
 			CompleteLevel();
 		}
-		Debug.Log("4 " + playerInstance.transform.position);
 
 		//if(timerInstance.timerStart < 1)
 		//{

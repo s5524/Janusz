@@ -6,12 +6,13 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        Debug.Log(SceneManager.GetActiveScene().buildIndex + 1);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //Debug.Log(SceneManager.GetActiveScene().buildIndex + 1);
+       // SceneManager.LoadScene("Maze");
+        SceneManager.LoadSceneAsync("Maze");
     }
     public void QuitGame()
     {
-        Debug.Log("Quit");
+        //Debug.Log("Quit");
         Application.Quit();
     }
 }

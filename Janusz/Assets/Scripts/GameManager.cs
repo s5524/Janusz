@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 	public GameObject gameOverUi;
 
 	private int size = 50;
-	private int time = 20;
+	private int time = 5;
 	public void CompleteLevel()
 	{
 		completeLevelUi.SetActive(true);
@@ -84,6 +84,8 @@ public class GameManager : MonoBehaviour
 
 	private void Update()
 	{
+		Debug.Log("3 " + playerInstance.transform.position);
+
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			RestartGame();
@@ -99,6 +101,7 @@ public class GameManager : MonoBehaviour
 		{
 			CompleteLevel();
 		}
+		Debug.Log("4 " + playerInstance.transform.position);
 
 		//if(timerInstance.timerStart < 1)
 		//{
@@ -108,11 +111,16 @@ public class GameManager : MonoBehaviour
 
 	private void Start()
 	{
+		Wait();
 		RestartGame();
-		Debug.Log("begin");
+		//Debug.Log("begin");
 	}
-
-	private void BeginGame()
+	IEnumerator Wait()
+	{
+		yield return new WaitForSeconds(03f);
+		
+	}
+		private void BeginGame()
 	{
 		mazeInstance = Instantiate(mazePrefab) as Maze;
 		mazeInstance.size = new IntVector2(size, size);
@@ -134,16 +142,16 @@ public class GameManager : MonoBehaviour
 		playerInstance = Instantiate(playerPrefab) as PlayerMovement;
 		//playerInstance.SetLocation(mazeInstance.GetCell(new IntVector2(0, 0)));
 		entrancePosition.z = entrancePosition.z - 4;
-		entrancePosition.z = entrancePosition.z + 1;
 		playerInstance.transform.position = entrancePosition;
+
 		playerInstance.inventory = inventoryInstance;
 		playerInstance.SetCells(mazeInstance);
+		Debug.Log("1 " + playerInstance.transform.position);
 
 		timerInstance = Instantiate(timerPrefab) as GameTimer;
 		timerInstance.timerStart = time;
 		timerInstance.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
 		HUDInstance.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
-		entrancePosition.z = entrancePosition.z - 1;
 
 		entrancePosition.z = entrancePosition.z - 2;
 		//entrancePosition.y = entrancePosition.y + 1;
@@ -163,7 +171,7 @@ public class GameManager : MonoBehaviour
 		enemySzwagierInstance.SetLocation(mazeInstance.GetCell(new IntVector2(UnityEngine.Random.Range(mazeInstance.size.x/2,mazeInstance.size.x), UnityEngine.Random.Range(mazeInstance.size.z / 2, mazeInstance.size.z))));
 
 
-		entrancePosition.z = entrancePosition.z + 1;
+		entrancePosition.z = entrancePosition.z + .5f;
 		//entrancePosition.y = entrancePosition.y - 1;
 
 		starterPointInstance = Instantiate(starterPointPrefab) as GameObject;
@@ -187,6 +195,7 @@ public class GameManager : MonoBehaviour
 		//	itemI
 		//}
 
+		Debug.Log("2 " + playerInstance.transform.position);
 
 	}
 

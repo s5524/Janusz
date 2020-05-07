@@ -18,11 +18,11 @@ public class EnemySzwagier : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    //void Update()
+    //{
 
-        //enemy.SetDestination(velocity);
-    }
+    //    //enemy.SetDestination(velocity);
+    //}
     public void SetPlayer(PlayerMovement player)
     {
         _player = player;

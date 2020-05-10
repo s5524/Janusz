@@ -9,9 +9,9 @@ public class PlayerMovement : MonoBehaviour
     private Maze maze;
     public CharacterController controller;
     // Start is called before the first frame update
-    public float speed = 12f;
-    public float gravity = -9.81f;
-
+    public float speed = 6f;
+    public float gravity = 20.0f;
+    public float rotationSpeed = 100.0F;
     public Transform grountCheck;
     public float groundDistance = 1f;
 
@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 velocity;
     bool isGrounded;
-
+    private Vector3 moveDirection = Vector3.zero;
     private void OnTriggerEnter(Collider other)
     {
 
@@ -60,25 +60,46 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        isGrounded = Physics.CheckSphere(grountCheck.position, groundDistance, groundMask);
+        //isGrounded = Physics.CheckSphere(grountCheck.position, groundDistance, groundMask);
 
 
 
-        if (isGrounded && velocity.y < 0)
+        //if (isGrounded && velocity.y < 0)
+        //{
+        //    velocity.y = -2f;
+        //}
+
+        //float x = Input.GetAxis("Horizontal");
+        //float z = Input.GetAxis("Vertical");
+
+
+        //Vector3 move = transform.right * x + transform.forward * z;
+
+        //controller.Move(move*speed*Time.deltaTime);
+
+        ////velocity.y += gravity * Time.deltaTime;
+
+        ////controller.Move(velocity * Time.deltaTime);
+        //float translation = Input.GetAxis("Vertical") * speed;
+        //float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
+        //translation *= Time.deltaTime;
+        //rotation *= Time.deltaTime;
+        //transform.Translate(0, 0, translation);
+        //transform.Rotate(0, rotation, 0);
+        CharacterController controller = GetComponent<CharacterController>();
+        if (controller.isGrounded)
         {
-            velocity.y = -2f;
+            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            moveDirection = transform.TransformDirection(moveDirection);
+            moveDirection *= speed;
+            if (Input.GetButton("Jump")) ;
+               // moveDirection.y = jumpSpeed;
+
         }
+        moveDirection.y -= gravity * Time.deltaTime;
+        //controller.enabled = false;
+        controller.Move(moveDirection * Time.deltaTime);
+        //controller.enabled = true;
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-
-        Vector3 move = transform.right * x + transform.forward * z;
-
-        controller.Move(move*speed*Time.deltaTime);
-
-        velocity.y += gravity * Time.deltaTime;
-
-        controller.Move(velocity * Time.deltaTime);
     }
 }

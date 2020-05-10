@@ -7,9 +7,15 @@ public class GameOver : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameManager gm;
-    public void LoadGameOver()
+    AsyncOperation asyncLoadLevel;
+
+    IEnumerator LoadGameOver()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-        //gm.RestartGame();
+        asyncLoadLevel = SceneManager.LoadSceneAsync("Menu", LoadSceneMode.Single);
+        while (!asyncLoadLevel.isDone)
+        {
+            Debug.Log("Loading the Scene");
+            yield return null;
+        }
     }
 }

@@ -54,8 +54,8 @@ public class GameManager : MonoBehaviour
 	public GameObject completeLevelUi;
 	public GameObject gameOverUi;
 
-	private int size = 50;
-	private int time = 20;
+	private int size = 20;
+	private int time = 60;
 	public void CompleteLevel()
 	{
 		completeLevelUi.SetActive(true);
@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
 		playerInstance = Instantiate(playerPrefab) as PlayerMovement;
 		//playerInstance.SetLocation(mazeInstance.GetCell(new IntVector2(0, 0)));
 		entrancePosition.z = entrancePosition.z - 4;
-		entrancePosition.z = entrancePosition.z + 1;
+		entrancePosition.y = entrancePosition.y + 1;
 		playerInstance.transform.position = entrancePosition;
 		playerInstance.inventory = inventoryInstance;
 		playerInstance.SetCells(mazeInstance);
@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
 		timerInstance.timerStart = time;
 		timerInstance.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
 		HUDInstance.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
-		entrancePosition.z = entrancePosition.z - 1;
+		entrancePosition.y = entrancePosition.y - 1;
 
 		entrancePosition.z = entrancePosition.z - 2;
 		//entrancePosition.y = entrancePosition.y + 1;
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
 		enemySzwagierInstance.SetLocation(mazeInstance.GetCell(new IntVector2(UnityEngine.Random.Range(mazeInstance.size.x/2,mazeInstance.size.x), UnityEngine.Random.Range(mazeInstance.size.z / 2, mazeInstance.size.z))));
 
 
-		entrancePosition.z = entrancePosition.z + 1;
+		entrancePosition.z = entrancePosition.z + .5f;
 		//entrancePosition.y = entrancePosition.y - 1;
 
 		starterPointInstance = Instantiate(starterPointPrefab) as GameObject;

@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class MainMenu : MonoBehaviour
+
+public class MiniGameSceneLuncher : MonoBehaviour
 {
     AsyncOperation asyncLoadLevel;
+    // Start is called before the first frame update
+    public void LoadMiniGame()
+    {
+        StartCoroutine(LoadMiniGameScene());
+    }
 
-    public void PlayGame()
+
+
+    private IEnumerator LoadMiniGameScene()
     {
-        StartCoroutine(LoadGameOver());
-        
-    }
-    public void QuitGame()
-    {
-        Debug.Log("Quit");
-        Application.Quit();
-    }
-    IEnumerator LoadGameOver()
-    {
+
         asyncLoadLevel = SceneManager.LoadSceneAsync("Maze");
         while (!asyncLoadLevel.isDone)
         {

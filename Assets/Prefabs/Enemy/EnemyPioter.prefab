@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 9163964871970395537}
   - component: {fileID: 5272262460239405595}
   - component: {fileID: 7999374125182175526}
-  - component: {fileID: 3270329877041642263}
   - component: {fileID: 1834025377573430660}
   - component: {fileID: 5501271664711067417}
   - component: {fileID: -2714999212068983772}
@@ -98,26 +97,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &3270329877041642263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5990833415377555746}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbc2bdae4c5d3f949abbdd7a6be9456d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyCaught: 0
-  EnemyDistance: 5
-  speed: 12
-  gravity: -9.81
-  groundDistance: 1
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!195 &1834025377573430660
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -130,7 +109,7 @@ NavMeshAgent:
   m_Radius: 0.5000001
   m_Speed: 2
   m_Acceleration: 20
-  avoidancePriority: 50
+  avoidancePriority: 0
   m_AngularSpeed: 120
   m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1

@@ -54,8 +54,7 @@ public class EnemyPioter : MonoBehaviour
             {
                 //Time.timeScale = 0f;
                 givenTask = true;
-                StartCoroutine(LoadMiniGameScene());
-                Debug.Log("dupa");
+      
             }
         }
 
@@ -72,29 +71,5 @@ public class EnemyPioter : MonoBehaviour
         }
     }
 
-    private IEnumerator LoadMiniGameScene()
-    {
-        var a = GameObject.FindGameObjectsWithTag("Pouse");
-        var b = GameObject.FindGameObjectsWithTag("Player");
-
-        GameObject[] c = new GameObject[a.Length + b.Length];
-
-
-        a.CopyTo(c, 0);
-        b.CopyTo(c, a.Length);
-
-        foreach (var item in c)
-        {
-            item.SetActive(false);
-        }
-
-
-        asyncLoadLevel = SceneManager.LoadSceneAsync("MazeTest",LoadSceneMode.Additive);
-        while (!asyncLoadLevel.isDone)
-        {
-            Debug.Log(asyncLoadLevel.isDone);
-            yield return null;
-        }
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MazeTest"));
-    }
+ 
 }

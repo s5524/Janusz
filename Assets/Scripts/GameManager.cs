@@ -8,6 +8,11 @@ using System;
 public class GameManager : MonoBehaviour
 {
 
+
+	private GameObject minigameInstatiate;
+	public GameObject minigamePrefab;
+
+
 	public Maze mazePrefab;
 
 	private Maze mazeInstance;
@@ -40,6 +45,9 @@ public class GameManager : MonoBehaviour
 
 	private GameObject starterPointInstance;
 
+	private MiniGameHelpers miniGameHelperInstance;
+
+	public MiniGameHelpers miniGameHelperPrefab;
 
 	public Inventory inventoryPrefab;
 
@@ -55,7 +63,7 @@ public class GameManager : MonoBehaviour
 	public GameObject gameOverUi;
 
 	private int size = 20;
-	private int time = 60;
+	private int time = 6000;
 	public void CompleteLevel()
 	{
 		completeLevelUi.SetActive(true);
@@ -118,6 +126,7 @@ public class GameManager : MonoBehaviour
 		mazeInstance.size = new IntVector2(size, size);
 		mazeInstance.Generate();
 
+		minigameInstatiate = Instantiate(minigamePrefab) as GameObject;
 
 		
 
@@ -172,6 +181,7 @@ public class GameManager : MonoBehaviour
 		surfaceInstance = Instantiate(surfacePrefab) as NavMeshSurface;
 
 		surfaceInstance.BuildNavMesh();
+     
 
 		itemsInstances = new Item[itemsPrefab.Length]; 
 		for (int i = 0; i < itemsPrefab.Length; i++)
@@ -181,6 +191,10 @@ public class GameManager : MonoBehaviour
 				//SetLocation(mazeInstance.GetCell(new IntVector2(UnityEngine.Random.Range(mazeInstance.size.x / 2, mazeInstance.size.z), UnityEngine.Random.Range(mazeInstance.size.x / 2, mazeInstance.size.z))));
 
 		}
+
+
+		miniGameHelperInstance = Instantiate(miniGameHelperPrefab) as MiniGameHelpers;
+
 
 		//foreach (var item in itemsPrefab)
 		//{
@@ -197,6 +211,10 @@ public class GameManager : MonoBehaviour
 		{
 			Destroy(mazeInstance.gameObject);
 
+		}
+		if (miniGameHelperInstance != null)
+		{
+			Destroy(miniGameHelperInstance.gameObject);
 		}
 		if (starterPointInstance != null)
 		{

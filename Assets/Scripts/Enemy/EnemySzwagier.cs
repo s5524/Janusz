@@ -40,7 +40,7 @@ public class EnemySzwagier : MonoBehaviour
 
         if (distance < 10 && givenTask == false)
         {
-            enemy.SetDestination(_player.transform.localPosition);
+            enemy.SetDestination(_player.transform.position);
             if (distance < 1)
             {
                 givenTask = true;
@@ -53,8 +53,8 @@ public class EnemySzwagier : MonoBehaviour
             {
                 if (!enemy.hasPath || enemy.velocity.sqrMagnitude == 0f)
                 {
-                    enemy.SetDestination(cell.transform.localPosition);
-                    velocity = cell.transform.localPosition;
+                    enemy.SetDestination(cell.transform.position);
+                    velocity = cell.transform.position;
                 }
             }
         }

@@ -13,7 +13,7 @@ public class BlockSpawner : MonoBehaviour
     float timeBetwenWaves = 5f;
     void Start()
     {
-        Spawn();
+        //Spawn();
 
     }
     private void Update()

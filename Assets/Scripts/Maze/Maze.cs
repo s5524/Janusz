@@ -98,10 +98,7 @@ public class Maze : MonoBehaviour {
 		}
 		MazeDirection direction = currentCell.RandomUninitializedDirection;
 		IntVector2 coordinates = currentCell.coordinates + direction.ToIntVector2();
-		//if (activeCells.)
-		//{
-
-		//}
+	
 		if (ContainsCoordinates(coordinates)) {
 			MazeCell neighbor = GetCell(coordinates);
 			if (neighbor == null) {
@@ -115,7 +112,6 @@ public class Maze : MonoBehaviour {
 			}
 			else {
 				CreateWall(currentCell, neighbor, direction);
-				// No longer remove the cell here.
 			}
 		}
 		else {

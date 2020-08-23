@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 407189634370260906}
   - component: {fileID: 407189634370260907}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Bricks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -474,6 +474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1500
   mapWidh: 1500
+  MGH: {fileID: 1774506574330011251, guid: 1a415f7396bd02742909a7cd8f3d1f55, type: 3}
 --- !u!50 &407189635651561308
 Rigidbody2D:
   serializedVersion: 4

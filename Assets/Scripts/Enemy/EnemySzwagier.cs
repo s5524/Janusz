@@ -8,6 +8,7 @@ public class EnemySzwagier : MonoBehaviour
     // Start is called before the first frame update
     private NavMeshAgent enemy;
     private Vector3 velocity;
+    public MiniGameHelpers MGH;
 
     private PlayerMovement _player;
     private bool givenTask;
@@ -44,18 +45,21 @@ public class EnemySzwagier : MonoBehaviour
             if (distance < 1)
             {
                 givenTask = true;
+                MGH.LoadMiniGame();
+
             }
         }
 
-        if (enemy != null && !enemy.pathPending)
+
+        else if (enemy != null && !enemy.pathPending)
         {
             if (enemy.remainingDistance <= enemy.stoppingDistance)
             {
-                if (!enemy.hasPath || enemy.velocity.sqrMagnitude == 0f)
-                {
+            //    if (!enemy.hasPath || enemy.velocity.sqrMagnitude == 0f)
+            //    {
                     enemy.SetDestination(cell.transform.position);
                     velocity = cell.transform.position;
-                }
+            //    }
             }
         }
     }

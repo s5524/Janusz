@@ -7,25 +7,20 @@ using UnityEngine.SceneManagement;
 
 public class EnemyPioter : MonoBehaviour
 {
-    // Start is called before the first frame update
     private NavMeshAgent enemy;
     private Vector3 velocity;
-    AsyncOperation asyncLoadLevel;
-
+    private GameManager gm;
+    public MiniGameHelpers MGH;
     private PlayerMovement _player;
     private bool givenTask;
 
     void Start()
     {
         enemy = GetComponent<NavMeshAgent>();
+        gm = GetComponent<GameManager>();
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        //enemy.SetDestination(velocity);
-    }
     public void SetPlayer(PlayerMovement player)
     {
         _player = player;
@@ -35,38 +30,26 @@ public class EnemyPioter : MonoBehaviour
         transform.localPosition = cell.transform.localPosition;
         velocity = cell.transform.localPosition;
     }
-
-    IEnumerator LoadGameOver()
-    {
-        yield return new WaitForSeconds(5);
-
-    }
     public void SetTravelLocation(MazeCell cell)
     {
 
         float distance = Vector3.Distance(_player.transform.position, transform.position);
-        //Debug.Log(distance);
         
         if (distance < 10 && givenTask==false)
         {
             enemy.SetDestination(_player.transform.localPosition);
             if (distance<2)
             {
-                //Time.timeScale = 0f;
                 givenTask = true;
-      
+                MGH.LoadMiniGame();
             }
         }
-
-        if (enemy != null && !enemy.pathPending)
+        else if (enemy != null && !enemy.pathPending)
         {
             if (enemy.remainingDistance <= enemy.stoppingDistance)
             {
-                if (!enemy.hasPath || enemy.velocity.sqrMagnitude == 0f)
-                {
-                    enemy.SetDestination(cell.transform.localPosition);
-                    velocity = cell.transform.localPosition;
-                }
+                enemy.SetDestination(cell.transform.position);
+                velocity = cell.transform.position;
             }
         }
     }

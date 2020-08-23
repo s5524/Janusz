@@ -93,7 +93,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.3
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
@@ -111,10 +111,10 @@ NavMeshAgent:
   m_Acceleration: 20
   avoidancePriority: 0
   m_AngularSpeed: 120
-  m_StoppingDistance: 0.5
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
@@ -128,7 +128,7 @@ CharacterController:
   m_GameObject: {fileID: 5990833415377555746}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Height: 1.9999999
   m_Radius: 0.50000006
@@ -149,3 +149,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7fa76cc1a4247d408ccaf7769e1e3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MGH: {fileID: 1774506574330011251, guid: 1a415f7396bd02742909a7cd8f3d1f55, type: 3}

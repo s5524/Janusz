@@ -7,17 +7,14 @@ public class MiniGameHelpers : MonoBehaviour
 {
     AsyncOperation asyncLoadLevel;
     bool poused;
-    GameObject[] c;
-    // Start is called before the first frame update
+    public static GameObject[] gameObjects;
+    public GameObject[] miniGames;
+    private GameObject miniGameInstance;
     public void LoadMiniGame()
     {
-        StartCoroutine(LoadMiniGameScene());
+        LoadMiniGameScene();
     }
 
-    public MiniGameHelpers()
-    {
-    
-    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -25,71 +22,49 @@ public class MiniGameHelpers : MonoBehaviour
             poused = !poused;
             if (poused)
             {
-                DisableMainSceneObjects();
+                DisableMainSceneObjects(false);
                 StartCoroutine(LoadScene("Menu"));
             }
             else
             {
-                DisableMainSceneObjects();
+                DisableMainSceneObjects(true);
                 StartCoroutine(LoadScene("Maze"));
             }
         }
     }
 
-    private IEnumerator LoadMiniGameScene()
+    private void LoadMiniGameScene()
     {
-        var a = GameObject.FindGameObjectsWithTag("Pouse");
-        var b = GameObject.FindGameObjectsWithTag("Player");
+        DisableMainSceneObjects(false);
+        var i = Random.Range(0, miniGames.Length);
+        miniGameInstance = Instantiate(miniGames[i]);
 
-        GameObject[] c = new GameObject[a.Length + b.Length];
-
-
-        a.CopyTo(c, 0);
-        b.CopyTo(c, a.Length);
-
-        foreach (var item in c)
-        {
-            item.SetActive(false);
-        }
-
-
-        asyncLoadLevel = SceneManager.LoadSceneAsync("Menu", LoadSceneMode.Additive);
-        while (!asyncLoadLevel.isDone)
-        {
-            Debug.Log(asyncLoadLevel.isDone);
-            yield return null;
-        }
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Menu"));
     }
-
-    private void PouseGameScene()
+    public void UnloadMiniGame()
     {
-
+        Destroy(miniGameInstance);
+        DisableMainSceneObjects(true);
 
     }
 
-    private void DisableMainSceneObjects()
+    private void DisableMainSceneObjects(bool disable)
     {
-        if (c==null)
+        if (gameObjects == null || gameObjects.Length == 0)
         {
-            var a = GameObject.FindGameObjectsWithTag("Pouse");
-            var b = GameObject.FindGameObjectsWithTag("Player");
+            var objectsWithPouseTag = GameObject.FindGameObjectsWithTag("Pouse");
+            var objectsWithPlayerTag = GameObject.FindGameObjectsWithTag("Player");
 
-            c = new GameObject[a.Length + b.Length];
+            gameObjects = new GameObject[objectsWithPouseTag.Length + objectsWithPlayerTag.Length];
 
-
-            a.CopyTo(c, 0);
-            b.CopyTo(c, a.Length);
-        }
-    
-
-        foreach (var item in c)
-        {
-            item.SetActive(!poused);
+            objectsWithPouseTag.CopyTo(gameObjects, 0);
+            objectsWithPlayerTag.CopyTo(gameObjects, objectsWithPouseTag.Length);
         }
 
 
-
+        foreach (var item in gameObjects)
+        {
+            item.SetActive(disable);
+        }
     }
     private IEnumerator LoadScene(string sceneName)
     {

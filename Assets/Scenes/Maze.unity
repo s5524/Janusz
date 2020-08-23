@@ -106,7 +106,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.3
+    agentRadius: 0.1
     agentHeight: 2
     agentSlope: 42.4
     agentClimb: 0.4
@@ -114,7 +114,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.1
+    cellSize: 0.033333335
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -973,8 +973,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae0fcacd7d8c464bb488d4784e2d893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigamePrefab: {fileID: 407189634370260949, guid: 96652b86c6e251143a9994259d48f7e3,
-    type: 3}
   mazePrefab: {fileID: 1901141547824750733, guid: a2395bb8a91944f21b621f2614d6db99,
     type: 3}
   playerPrefab: {fileID: 6888377975819997112, guid: 9bb9db2560df50c4a91594f1ff6ce7f9,
@@ -1030,11 +1028,11 @@ GameObject:
   - component: {fileID: 1593926817}
   m_Layer: 5
   m_Name: MiniMap
-  m_TagString: Untagged
+  m_TagString: Pouse
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1593926817
 RectTransform:
   m_ObjectHideFlags: 0

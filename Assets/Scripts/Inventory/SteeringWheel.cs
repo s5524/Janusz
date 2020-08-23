@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SteeringWheel : Item
 {
-    // Start is called before the first frame update
     public override string Name => "SteeringWheel";
 
     public Sprite _imaget;

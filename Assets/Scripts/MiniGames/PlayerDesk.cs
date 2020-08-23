@@ -7,7 +7,7 @@ public class PlayerDesk : MonoBehaviour
     // Start is called before the first frame update
     public float speed = 15f;
     public float mapWidh = 500f;
-
+    public MiniGameHelpers MGH;
     private Rigidbody2D rb;
 
     private void Start()
@@ -26,8 +26,12 @@ public class PlayerDesk : MonoBehaviour
         rb.MovePosition(newPosition);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D()
     {
+        if(MGH != null)
+        {
+            MGH.UnloadMiniGame();
 
+        }
     }
 }

@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ebef73e230ee24e8dd64ed8343e93f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 0}
+  controller: {fileID: -4922416326948461092}
   speed: 12
   gravity: 20
   rotationSpeed: 100

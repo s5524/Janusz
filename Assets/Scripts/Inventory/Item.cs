@@ -19,6 +19,5 @@ public class Item : MonoBehaviour, IInventoryItems
         transform.localPosition = cell.transform.localPosition;
         velocity = cell.transform.localPosition;
     }
-    // Start is called before the first frame update
 
 }

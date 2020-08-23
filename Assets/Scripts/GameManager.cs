@@ -8,7 +8,6 @@ using System;
 public class GameManager : MonoBehaviour
 {
 
-
 	private GameObject minigameInstatiate;
 	public GameObject minigamePrefab;
 
@@ -63,15 +62,18 @@ public class GameManager : MonoBehaviour
 	public GameObject gameOverUi;
 
 	private int size = 20;
-	private int time = 6000;
+	private int time = 30;
 	public void CompleteLevel()
 	{
+		MiniGameHelpers.gameObjects = null;
+
 		completeLevelUi.SetActive(true);
 
 	}
 
 	public void GameOver()
 	{
+		MiniGameHelpers.gameObjects = null;
 		size = 20;
 		time = 30;
 
@@ -81,6 +83,8 @@ public class GameManager : MonoBehaviour
 	}
 	public void GoNext()
 	{
+		MiniGameHelpers.gameObjects = null;
+
 		size += 5;
 		time += 20;
 		RestartGame();
@@ -116,17 +120,20 @@ public class GameManager : MonoBehaviour
 
 	private void Start()
 	{
+		MiniGameHelpers.gameObjects = null;
+
 		RestartGame();
 		Debug.Log("begin");
 	}
 
 	private void BeginGame()
 	{
+		MiniGameHelpers.gameObjects = null;
+
 		mazeInstance = Instantiate(mazePrefab) as Maze;
 		mazeInstance.size = new IntVector2(size, size);
 		mazeInstance.Generate();
 
-		minigameInstatiate = Instantiate(minigamePrefab) as GameObject;
 
 		
 
@@ -207,16 +214,17 @@ public class GameManager : MonoBehaviour
 	public void RestartGame()
 	{
 		StopAllCoroutines();
+
 		if (mazeInstance != null)
 		{
 			Destroy(mazeInstance.gameObject);
 
 		}
-		if (miniGameHelperInstance != null)
-		{
-			Destroy(miniGameHelperInstance.gameObject);
-		}
-		if (starterPointInstance != null)
+        if (miniGameHelperInstance != null)
+        {
+            Destroy(miniGameHelperInstance.gameObject);
+        }
+        if (starterPointInstance != null)
 		{
 			Destroy(starterPointInstance.gameObject);
 

@@ -10,7 +10,9 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    public TextMeshProUGUI text;
+    public TextMeshProUGUI Name;
+    public TextMeshProUGUI Points;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,13 +37,23 @@ public class Score : MonoBehaviour
         }
         else
         {
-            text.text = "";
+            if (Name.text != null)
+            {
+                Name.text = "";
+
+            }
+            if (Points.text != null)
+            {
+                Points.text = "";
+
+            }
             var json = www.downloadHandler.text ;
             var myObject = JsonConvert.DeserializeObject<ScoreList>(json);//JsonUtility.FromJson<ScoreList>(json);
 
             foreach (var score in myObject.ScoreLists)
             {
-                text.text = text.text + "Name:\t" + score.name + "\t\tScore:" + score.points + "\n";
+                Name.text += "Name:  " + score.name + "\n";
+                Points.text += "Score:  " + score.points + "\n"; 
             }
 
 

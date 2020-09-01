@@ -22,7 +22,6 @@ public class MainMenu : MonoBehaviour
         asyncLoadLevel = SceneManager.LoadSceneAsync("Maze");
         while (!asyncLoadLevel.isDone)
         {
-            Debug.Log(asyncLoadLevel.isDone);
             yield return null;
         }
     }

@@ -14,7 +14,6 @@ public class GameOver : MonoBehaviour
         asyncLoadLevel = SceneManager.LoadSceneAsync("EndGame", LoadSceneMode.Single);
         while (!asyncLoadLevel.isDone)
         {
-            Debug.Log("Loading the Scene");
             yield return null;
         }
     }

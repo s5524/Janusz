@@ -85,6 +85,9 @@ public class GameManager : MonoBehaviour
 	{
 		MiniGameHelpers.gameObjects = null;
 
+		StaticData.Score += (int)timerInstance.timerStart + size;
+		Debug.Log(StaticData.Score);
+
 		size += 5;
 		time += 20;
 		RestartGame();
@@ -123,7 +126,6 @@ public class GameManager : MonoBehaviour
 		MiniGameHelpers.gameObjects = null;
 
 		RestartGame();
-		Debug.Log("begin");
 	}
 
 	private void BeginGame()

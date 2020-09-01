@@ -19,7 +19,7 @@ public class EndGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        field.text = "text6754";
+        field.text = "Type your Name";
     }
 
     public void SaveScore()
@@ -37,9 +37,9 @@ public class EndGame : MonoBehaviour
         submitButton.interactable = false;
         var score = new Scores();
 
-        score.name = "Szymon";
-        score.points = 123123123;
-
+        score.name = field.text;
+        score.points = StaticData.Score;
+        StaticData.Score = 0;
         var scoreToSend = JsonConvert.SerializeObject(score);
 
 

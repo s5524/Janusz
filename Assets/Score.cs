@@ -36,7 +36,7 @@ public class Score : MonoBehaviour
         else
         {
             text.text = "";
-            var json = "{\"ScoreLists\":" + www.downloadHandler.text + "}";
+            var json = www.downloadHandler.text ;
             var myObject = JsonConvert.DeserializeObject<ScoreList>(json);//JsonUtility.FromJson<ScoreList>(json);
 
             foreach (var score in myObject.ScoreLists)

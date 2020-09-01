@@ -28,6 +28,10 @@ public class Maze : MonoBehaviour {
 
 
 
+
+
+
+
 	public IntVector2 RandomCoordinates {
 		get {
 			

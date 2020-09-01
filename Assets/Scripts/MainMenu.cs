@@ -6,10 +6,11 @@ public class MainMenu : MonoBehaviour
 {
     AsyncOperation asyncLoadLevel;
 
+
     public void PlayGame()
     {
         StartCoroutine(LoadGameOver());
-        
+
     }
     public void QuitGame()
     {
